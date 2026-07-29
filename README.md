@@ -1,177 +1,104 @@
 # 🧠 Social Anxiety Detection AI
 
-A full-stack AI-powered web application that analyzes user-provided text using Natural Language Processing (NLP), Machine Learning, and Sentiment Analysis to identify emotional patterns and provide supportive, personalized suggestions.
+A full-stack AI-powered web application that analyzes user text using **NLP, Machine Learning, semantic embeddings, and sentiment analysis** to classify anxiety levels and provide supportive suggestions.
 
-The application combines a React frontend, FastAPI backend, Scikit-learn, NLTK, and Supabase for authentication and database management.
-
----
-
-## 🌐 Live Demo
-
-🔗 **[Try Social Anxiety Detection AI](https://social-anxiety-detection.vercel.app/)**
-
----
-
-## 📌 Overview
-
-Social Anxiety Detection AI provides an interactive platform where users can express their thoughts and feelings through text.
-
-The application processes the submitted text using Natural Language Processing and Sentiment Analysis techniques. It analyzes the emotional tone of the input and provides supportive suggestions based on the results.
-
-Users can also securely log in, view their previous interactions, and explore their history and insights.
-
-> **Note:** This project is developed for educational and technological purposes. It is not a medical diagnostic tool and should not be considered a substitute for professional mental-health care.
-
----
+🔗 **Live Demo:** https://social-anxiety-detection.vercel.app
 
 ## ✨ Features
 
-### 🧠 AI-Powered Text Analysis
+- AI-powered text and sentiment analysis
+- Anxiety classification: **Low, Moderate, High**
+- NLP preprocessing and semantic text analysis
+- High-risk phrase detection
+- Supportive suggestions and prediction history
+- User authentication with Supabase
+- PostgreSQL database for storing user interactions
+- Interactive insights dashboard
 
-Analyzes user-provided text using Natural Language Processing and Machine Learning techniques to identify meaningful patterns.
+## 🧠 AI / ML
 
-### 💭 Sentiment Analysis
+- **NLP:** NLTK, Tokenization, Stopword Removal, Lemmatization
+- **Feature Engineering:** Word & Character TF-IDF
+- **Embeddings:** Sentence Transformers (`all-MiniLM-L6-v2`)
+- **Models:** Logistic Regression, LinearSVC, Multinomial Naive Bayes
+- **Ensemble:** Voting Classifier
+- **Safety Layer:** Rule-based risk phrase detection
 
-Analyzes the emotional tone of user input and provides an interpretation of the detected sentiment.
-
-### 💡 Supportive Suggestions
-
-Provides personalized and supportive suggestions based on the analysis results.
-
-### 📊 History & Insights
-
-Allows users to view previous interactions and understand patterns through history and visual insights.
-
-### 🔐 User Authentication
-
-Uses Supabase Authentication to securely manage user registration, login, and access to personal data.
-
-### 🗄️ Cloud Database
-
-Uses Supabase Database to securely store application data and user-related information.
-
-### ⚡ FastAPI Backend
-
-Uses FastAPI to build APIs and handle communication between the frontend, AI/ML components, and database.
-
-### 🎨 Modern User Interface
-
-Built with React.js, Vite, and Tailwind CSS to provide a responsive and interactive user experience.
-
----
-
-## 🏗️ System Architecture
-
-The application follows a full-stack architecture where the frontend communicates with the FastAPI backend, which connects the AI/ML processing layer and Supabase services.
+### Prediction Pipeline
 
 ```text
-                    ┌─────────────────────┐
-                    │        User         │
-                    │   Web Application   │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │   React + Vite      │
-                    │   Tailwind CSS      │
-                    │   Recharts + Axios  │
-                    └──────────┬──────────┘
-                               │
-                         API Requests
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │   FastAPI Backend   │
-                    │       Python        │
-                    └──────────┬──────────┘
-                               │
-                  ┌────────────┴────────────┐
-                  │                         │
-                  ▼                         ▼
-       ┌────────────────────┐    ┌────────────────────┐
-       │    AI / ML Layer   │    │      Supabase      │
-       │                    │    │                    │
-       │ Scikit-learn       │    │ Authentication     │
-       │ NLTK               │    │ Database           │
-       │ Sentiment Analysis │    │                    │
-       └────────────────────┘    └────────────────────┘
+User Text
+   ↓
+NLP Preprocessing
+   ↓
+TF-IDF / Semantic Embeddings
+   ↓
+Machine Learning Model
+   ↓
+Risk Detection
+   ↓
+Anxiety Level + Suggestions
+```
+
+## 📈 Model Performance
+
+### Semantic Embedding + Logistic Regression
+
+| Metric | Score |
+|---|---:|
+| Accuracy | **87.09%** |
+
+| Class | Precision | Recall | F1 |
+|---|---:|---:|---:|
+| Low | 0.86 | 0.91 | 0.89 |
+| Moderate | 0.58 | 0.81 | 0.67 |
+| High | 0.95 | 0.86 | 0.90 |
+
+The ensemble pipeline also achieved **92%+ accuracy** under its V6 feature-engineering configuration.
+
 ## 🛠️ Tech Stack
 
-### Frontend
+- **Frontend:** React.js, Vite, Tailwind CSS, Recharts, Axios
+- **Backend:** Python, FastAPI, Uvicorn
+- **AI/ML:** Scikit-learn, NLTK, TF-IDF, Sentence Transformers
+- **Database/Auth:** Supabase, PostgreSQL
+- **Deployment:** Vercel
+- **Tools:** Git, GitHub, VS Code
 
-Technologies used to build the user interface and interactive features.
+## 📊 Dataset
 
-- React.js
-- Vite
-- Tailwind CSS
-- Recharts
-- Axios
+Combined mental-health text classification dataset sourced from **Kaggle**, containing approximately **53,000 records**.
 
-### Backend
+Original categories include Normal, Stress, Anxiety, Depression, and Suicidal, which are processed into:
 
-Used to build APIs and handle application logic.
+**Low Anxiety · Moderate Anxiety · High Anxiety**
 
-- Python
-- FastAPI
-- Uvicorn
+## 🚀 Run Locally
 
-### AI / Machine Learning
+```bash
+git clone https://github.com/Rags-8/social-anxiety-detection-ai.git
+cd social-anxiety-detection-ai
 
-Used for natural language processing, text analysis, and sentiment analysis.
+# Backend
+cd backend
+pip install -r requirements.txt
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
 
-- Scikit-learn
-- NLTK
-- Natural Language Processing (NLP)
-- Sentiment Analysis
+# Frontend
+cd ../frontend
+npm install
+npm run dev
+```
 
-### Database & Authentication
+Configure Supabase credentials and the backend URL using environment variables.
 
-Used to securely manage users and store application data.
+## 👩‍💻 Author
 
-- Supabase Database
-- Supabase Authentication
+**S G Raghavi Sai**  
+Computer Science & Engineering (Artificial Intelligence)
 
-### Development Tools
+[GitHub](https://github.com/Rags-8) • [LinkedIn](https://www.linkedin.com/in/s-g-raghavi-sai-a7a4482bb/)
 
-Tools used for development, testing, and version control.
+> ⚠️ This project is for educational purposes and is not a medical diagnostic tool.
 
-- Git
-- GitHub
-- VS Code
-
-### Deployment
-
-The application frontend is deployed using:
-
-- Vercel
-
----
-
-## 📂 Project Structure
-
-The project is organized into separate frontend, backend, and machine-learning components.
-
-```text
-social-anxiety-detection-ai/
-│
-├── backend/                    # FastAPI backend
-│   ├── app/
-│   │   ├── main.py             # Main backend application
-│   │   └── ...
-│   ├── requirements.txt        # Backend dependencies
-│   └── ...
-│
-├── frontend/                   # React frontend
-│   ├── src/
-│   │   ├── components/         # Reusable UI components
-│   │   ├── pages/              # Application pages
-│   │   └── ...
-│   ├── package.json            # Frontend dependencies
-│   └── ...
-│
-├── train_model.py              # Machine learning model training
-├── train_nlp_model.py          # NLP model training
-├── Combined Data.csv           # Dataset
-├── .gitignore                  # Files ignored by Git
-├── LICENSE                     # Project license
-└── README.md                   # Project documentation
+**License:** MIT
